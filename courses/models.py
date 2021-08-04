@@ -42,6 +42,9 @@ class Course(models.Model):
     travel_time = models.PositiveIntegerField(default=1, verbose_name='Примерное время прохождения')
     date_add = models.DateField(auto_now_add=True)
 
+    def get_members_count(self):
+        return self.members.count()
+
     def __str__(self):
         return f"{self.title}"
 
