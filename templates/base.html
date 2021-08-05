@@ -35,7 +35,8 @@
     
   </head>
   <body>
-    
+
+
 <header>
   <div class="collapse bg-dark" id="navbarHeader">
     <div class="container">
@@ -69,7 +70,7 @@
 </header>
 
 <main>
-
+    {% block content %}
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -83,7 +84,7 @@
         </p>
       <p>
           {% for category in categories %}
-          <a href="#" class="btn btn-primary my-2">{{ category.title }}</a>
+          <a href="{% url 'category' slug=category.slug %}" class="btn btn-primary my-2">{{ category.title }}</a>
           {% endfor %}
       </p>
       </div>
@@ -106,7 +107,7 @@
                 <div class="btn-group">
                   <a class="btn btn-sm btn-outline-secondary">Записаться</a>
                 </div>
-                <small class="text-muted">{{ course.get_members_count }} человек(а)</small>
+                <small class="text-muted">{{ course.category.title }}</small>
               </div>
             </div>
           </div>
@@ -115,6 +116,8 @@
       </div>
     </div>
   </div>
+
+{% endblock content %}
 
 </main>
 
