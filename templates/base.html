@@ -91,9 +91,21 @@
     </div>
   </section>
 
+
+
   <div class="album py-5 bg-light">
     <div class="container">
-
+    <form action="{% url 'search' %}" class="input-group rounded mb-5" method="get">
+  <input type="search" class="form-control rounded" placeholder="Название курса, автор или предмет" aria-label="Search"
+    aria-describedby="search-addon" name="q" />
+  <span class="input-group-text border-0" id="search-addon">
+    <label for="checkbox-certificate" style="margin-right: 5px">С сертификатом</label>
+    <input id="checkbox-certificate" type="checkbox" name="cert" style="margin-right: 5px">
+      <label for="checkbox-free" style="margin-right: 5px;">Бесплатный</label>
+    <input id="checkbox-free" type="checkbox" name="free" style="margin-right: 5px">
+    <button class="btn btn-success" type="submit">Искать</button>
+  </span>
+</form>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {% for course in courses %}
         <div class="col">
@@ -101,13 +113,20 @@
             <img class="bd-placeholder-img card-img-top" width="100%" height="225" alt="" src="{{ course.image.url }}" ><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
-                <h3 class="card-text">{{ course.title }}</h3>
+                <h3 class="card-text"><a href="{% url 'course_detail' pk=course.id %}" style="text-decoration: none;">{{ course.title }}</a></h3>
               <p class="card-text">Учитель {{ course.author.username }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a class="btn btn-sm btn-outline-secondary">Записаться</a>
+                  {% if request.user not in course.members.all %}
+                  <a href="{% url 'add_member' pk=course.id %}" class="btn btn-sm btn-outline-secondary">Записаться</a>
+                  {% elif course.price and request.user not in course.members.all %}
+                    <p>{{ course.price }} Р</p>
+                    <a class="btn btn-sm btn-outline-secondary">Купить</a>
+                  {% else %}
+                    <a class="btn btn-sm btn-outline-secondary">Продолжить</a>
+                  {% endif %}
                 </div>
-                <small class="text-muted">{{ course.category.title }}</small>
+                  <small class="text-muted">{{ course.category.title }}</small>
               </div>
             </div>
           </div>

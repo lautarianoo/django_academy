@@ -7,6 +7,7 @@ class Category(models.Model):
 
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
+    school_predmet = models.BooleanField(default=False, verbose_name='Предмет')
 
     def __str__(self):
         return self.title
@@ -16,6 +17,14 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 class Course(models.Model):
+
+    LANGUAGE = (
+        ('Русский', 'Русский'),
+        ('Английский', 'Английский'),
+        ('Немецкий', 'Немецкий'),
+        ('Французский', 'Французкий'),
+        ('Испанский', 'Испанский'),
+    )
 
     STATUS_FORMONEY = (
         ('Платный', 'Платный'),
@@ -35,9 +44,13 @@ class Course(models.Model):
     community = models.TextField(max_length=900, verbose_name='На кого расчитан курс')
     requirements  = models.TextField(max_length=900, verbose_name='Требования')
     author = models.ForeignKey(User, verbose_name='Автор курса', on_delete=models.CASCADE)
+    language = models.CharField(choices=LANGUAGE, max_length=200, verbose_name='Язык', null=True)
     image = models.ImageField()
+    status_money = models.BooleanField(default=False, verbose_name='Платный')
+    #TODO: ХУЙНЮ СНИЗУ УДАЛИТЬ
     status_formoney = models.CharField(max_length=50, verbose_name='Платный или бесплатный', choices=STATUS_FORMONEY)
     price = models.IntegerField(default=0, verbose_name='Цена курса', blank=True, null=True)
+    status_certificate = models.BooleanField(default=False, verbose_name='Сертификат', null=True)
     certificate = models.CharField(max_length=50, verbose_name='Сертификат', choices=CERTIFICATE)
     travel_time = models.PositiveIntegerField(default=1, verbose_name='Примерное время прохождения')
     date_add = models.DateField(auto_now_add=True)

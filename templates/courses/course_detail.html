@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+          <img src="{{ course.image.url }}" alt="" height="100" width="100" style="border-radius: 10px; margin-bottom: 30px">
+        <h1 class="fw-light">{{ course.title }}</h1>
+          <p class="lead text-muted">{{ course.short_description }}</p>
+          <h6>Сертификат Django Academy</h6>
+          <p style="margin-left: 80%">От автора {{ course.author.username }}</p>
+      </div>
+
+    </div>
+  </section>
+    <div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                <h2>О курсе</h2>
+                <p>{{ course.description }}</p>
+                <hr>
+                <h2>На кого расчитан этот курс</h2>
+                <p>{{ course.community }}</p>
+                <hr>
+                <h2>Требования</h2>
+                <p>{{ course.requirements }}</p>
+            </div>
+            <div class="col-2">
+            {% if course.price and request.user not in course.members.all %}
+                <h1>{{ course.price }} ₽</h1>
+                <a href="#" class="btn btn-success" style="font-size: x-large; padding: 0.8rem 2rem;">Купить</a>
+            {% elif request.user in course.members.all %}
+                <div style="margin-left: 20px">
+                    <div class="row">
+                        <a href="#" class="btn btn-success" style="font-size: x-large; padding: 0.8rem 2rem;">Продолжить</a>
+                    </div>
+                </div>
+            {% else %}
+               <div style="margin-left: 20px">
+                <div class="row">
+                <a href="{% url 'add_member' pk=course.id %}" class="btn btn-success" style="font-size: x-large; padding: 0.8rem 2rem;">Записаться</a>
+                </div>
+                   <div class="mt-5" style="border: lightgrey solid 0.3px; border-radius: 5px">
+               <p style="margin: 11px;">Курс доступен бесплатно. Все материалы доступны сейчас для свободного прохождения</p>
+                   </div>
+            </div>
+            {% endif %}
+            <div class="mt-5" style="border: lightgrey solid 0.3px; border-radius: 5px">
+               <div style="margin: 11px;">
+                   <p style="font-weight: bold">Время прохождения курса:</p>
+                   <p>{{ course.travel_time }} час(а)</p>
+                   <p style="font-weight: bold">Язык:</p>
+                   <p>{{ course.language }}</p>
+               </div>
+            </div>
+    </div>
+  </div>
+{% endblock content %}
