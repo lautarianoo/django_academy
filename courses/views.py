@@ -33,10 +33,11 @@ class AddMemberCourse(View):
 class SearchCourse(View):
 
     def get(self, request, *args, **kwargs):
+
         courses = Course.objects.filter(
             Q(title__icontains=request.GET.get('q')) |
             Q(category__title__icontains=request.GET.get('q')) |
-            Q(certificate=request.GET.get('cert')) |
+            Q(status_certificate=request.GET.get('cert')) |
             Q(status_money=request.GET.get('free'))
         ).distinct()
         return render(request, 'base.html', {'courses': courses})

@@ -38,20 +38,17 @@ class Course(models.Model):
 
     title = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
-    members = models.ManyToManyField(User, verbose_name='Участники курса', related_name='courses')
     short_description = models.TextField(max_length=1200)
     description = models.TextField(max_length=3500)
+    members = models.ManyToManyField(User, verbose_name='Участники курса', related_name='courses')
     community = models.TextField(max_length=900, verbose_name='На кого расчитан курс')
     requirements  = models.TextField(max_length=900, verbose_name='Требования')
     author = models.ForeignKey(User, verbose_name='Автор курса', on_delete=models.CASCADE)
     language = models.CharField(choices=LANGUAGE, max_length=200, verbose_name='Язык', null=True)
     image = models.ImageField()
     status_money = models.BooleanField(default=False, verbose_name='Платный')
-    #TODO: ХУЙНЮ СНИЗУ УДАЛИТЬ
-    status_formoney = models.CharField(max_length=50, verbose_name='Платный или бесплатный', choices=STATUS_FORMONEY)
     price = models.IntegerField(default=0, verbose_name='Цена курса', blank=True, null=True)
-    status_certificate = models.BooleanField(default=False, verbose_name='Сертификат', null=True)
-    certificate = models.CharField(max_length=50, verbose_name='Сертификат', choices=CERTIFICATE)
+    status_certificate = models.BooleanField(default=False, verbose_name='Сертификат')
     travel_time = models.PositiveIntegerField(default=1, verbose_name='Примерное время прохождения')
     date_add = models.DateField(auto_now_add=True)
 
