@@ -48,7 +48,7 @@ class UserAcademy(AbstractBaseUser):
 
     first_name = models.CharField(verbose_name='Имя', max_length=50)
     last_name = models.CharField(verbose_name='Фамилия', max_length=100)
-    courses = models.ManyToManyField('courses.Course', verbose_name='Курсы в которые записан')
+    courses = models.ManyToManyField('courses.Course', verbose_name='Курсы в которые записан', related_name='user')
     phone = models.CharField(max_length=30, verbose_name='Номер телефона')
     username = models.CharField(max_length=100, verbose_name='Прозвище юзера', null=True)
     email = models.EmailField(verbose_name='Email', unique=True)

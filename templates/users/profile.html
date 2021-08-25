@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+<div class="row"><h2>{{ user.first_name }} {{ user.last_name }}</h2>
+    <div class="col-2">
+        <a href="">Настройки</a>
+    </div>
+    <div class="col-2">
+        <a href="">Преподавание</a>
+    </div>
+    <div class="col-2">
+        <a href="">Cертификаты</a>
+    </div>
+</div>
+
+
+    {% if user.avatar %}
+         <img class="img-fluid" src="{{ user.avatar.url }}" alt="">
+    {% endif %}
+<h3>Мои курсы</h3>
+
+
+ <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+              {% for course in courses %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" alt="" src="{{ course.image.url }}" ><rect width="100%" height="100%" fill="#55595c"/></img>
+
+            <div class="card-body">
+                <h3 class="card-text"><a href="{% url 'course_detail' pk=course.id %}" style="text-decoration: none;">{{ course.title }}</a></h3>
+              <p class="card-text">{{ course.author.first_name }} {{ course.author.last_name }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary">Продолжить</a>
+                </div>
+                  <small class="text-muted">{{ course.category.title }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+            </div>
+    </div>
+{% endblock content %}

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
 from .forms import LoginForm, RegisterForm
+from courses.models import Course
 
 class LoginView(View):
 
@@ -40,3 +41,9 @@ class RegisterView(View):
             new_user.save()
             return HttpResponseRedirect(reverse('login'))
         return render(request, 'users/register.html', {'form': form})
+
+class ProfileView(View):
+    '''Свой профиль'''
+    def get(self, request, *args, **kwargs):
+        courses = Course.objects.filter(members__exact=request.user)
+        return render(request, 'users/profile.html', {'courses': courses, 'user': request.user})
