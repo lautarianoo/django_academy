@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="post" action="" class="form-control" style="margin-top: 10px">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Сохранить изменения</button>
+    </form>
+    <hr>
+    {% if not request.user.status_email %}
+        <H3>EMAIL не подтверждён</H3>
+        <a href="" style="text-decoration: none">ПОЛУЧИТЬ КОД И ПОДТВЕРДИТЬ</a>
+    {% endif %}
+
+{% endblock content %}

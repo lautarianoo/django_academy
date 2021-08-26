@@ -46,7 +46,7 @@
           <p class="text-muted">Выберите любой желаемый курс и начните обучение прямо сейчас!</p>
         </div>
           <div class="col-sm-2 offset-md-0 py-4">
-          <h4 class="text-white">Личный кабинет</h4>
+              <h4 class="text-white"><a href="{% url 'profile' %}" style="color: #fff;">Личный кабинет</a></h4>
           <ul class="list-unstyled">
               {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}" class="text-white">Выйти</a></li>
@@ -125,7 +125,11 @@
 
             <div class="card-body">
                 <h3 class="card-text"><a href="{% url 'course_detail' pk=course.id %}" style="text-decoration: none;">{{ course.title }}</a></h3>
-              <p class="card-text">{{ course.author.first_name }} {{ course.author.last_name }}</p>
+
+                <p class="card-text">{% if request.user == course.author %}<a href="{% url 'profile' %}">{{ course.author.first_name }} {{ course.author.last_name }}</a>
+              {% else %}
+                  <a href="{% url 'profile_user' pk=course.author.id %}">{{ course.author.first_name }} {{ course.author.last_name }}</a>
+              {% endif %}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   {% if request.user not in course.members.all %}

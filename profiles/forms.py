@@ -31,3 +31,9 @@ class RegisterForm(forms.ModelForm):
         if data['password1'] != data['password2']:
             raise forms.ValidationError('Пароли не совпадают')
         return data['password2']
+
+class SettingsForm(forms.ModelForm):
+
+    class Meta:
+        model = UserAcademy
+        fields = ('phone', 'first_name', 'last_name', 'avatar')
