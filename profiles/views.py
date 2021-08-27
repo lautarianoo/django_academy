@@ -76,3 +76,4 @@ class SettingsView(View):
             user.save()
             return HttpResponseRedirect(reverse('profile'))
         return render(request, 'users/settings.html', {'form': form})
+
