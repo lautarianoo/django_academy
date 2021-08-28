@@ -1,5 +1,6 @@
 from django.db import models
 from courses.models import Course
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class TopicCourse(models.Model):
 
@@ -7,11 +8,11 @@ class TopicCourse(models.Model):
     course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return f'{self.title} | {self.course.title}'
 
     class Meta:
-        verbose_name = 'Секция'
-        verbose_name_plural = 'Секции'
+        verbose_name = 'Тема курса'
+        verbose_name_plural = 'Темы курса'
 
 class SectionTopic(models.Model):
 
@@ -20,22 +21,42 @@ class SectionTopic(models.Model):
     balls = models.IntegerField(default=1, verbose_name='Количество баллов за урок')
 
     def __str__(self):
-        return self.title
+        return f'{self.title} | {self.topic.title}'
 
     class Meta:
-        verbose_name = 'Урок'
-        verbose_name_plural = 'Уроки'
+        verbose_name = 'Cекция'
+        verbose_name_plural = 'Секции'
 
-class LessonAbstract(models.Model):
+class Lesson(models.Model):
 
-    class Meta:
-        verbose_name = 'Урок'
-        verbose_name_plural = 'Уроки'
-        abstract = True
-
-    title = models.CharField(max_length=100, verbose_name='Название урока')
+    title = models.CharField(max_length=100, verbose_name='Название урока', blank=True, null=True)
+    content = RichTextUploadingField(verbose_name='Контент урока')
     section = models.ForeignKey(SectionTopic, verbose_name='Секция уроков', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.title} | {self.section.title}'
+
+    class Meta:
+        verbose_name = 'Урок'
+        verbose_name_plural = 'Уроки'
+
+class Test(models.Model):
+
+    text = RichTextUploadingField(verbose_name='Содержимое теста')
+    right_answer = models.CharField(max_length=400, verbose_name='Правильный ответ')
+    variant_1 = models.CharField(max_length=400, verbose_name='Вариант 1')
+    variant_2 = models.CharField(max_length=400, verbose_name='Вариант 2')
+    variant_3 = models.CharField(max_length=400, verbose_name='Вариант 3')
+    variant_4 = models.CharField(max_length=400, verbose_name='Вариант 4', blank=True, null=True)
+    variant_5 = models.CharField(max_length=400, verbose_name='Вариант 5', blank=True, null=True)
+    variant_6 = models.CharField(max_length=400, verbose_name='Вариант 6', blank=True, null=True)
+    variant_7 = models.CharField(max_length=400, verbose_name='Вариант 7', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.id}'
+
+    class Meta:
+        verbose_name='Тест'
+        verbose_name_plural = 'Тесты'
+
 

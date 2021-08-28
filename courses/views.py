@@ -41,3 +41,4 @@ class SearchCourse(View):
             Q(status_money=request.GET.get('free'))
         ).distinct()
         return render(request, 'base.html', {'courses': courses})
+

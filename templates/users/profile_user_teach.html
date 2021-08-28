@@ -4,10 +4,7 @@
     <div class="container">
 <div class="row"><h2>{{ user.first_name }} {{ user.last_name }}</h2>
     <div class="col-2">
-        <a href="{% url 'settings' %}">Настройки</a>
-    </div>
-    <div class="col-2">
-        <a href="{% url 'my_author_course' %}">Преподавание</a>
+        <a href="{% url 'author_course' pk=user.id %}">Преподавание</a>
     </div>
     <div class="col-2">
         <a href="">Cертификаты</a>
@@ -18,12 +15,12 @@
     {% if user.avatar %}
          <img class="img-fluid" src="{{ user.avatar.url }}" alt="">
     {% endif %}
-<h3>Мои курсы</h3>
+<h3>Каталог курсов</h3>
 
 
  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-              {% for course in courses %}
+              {% for course in user.courses.all %}
         <div class="col">
           <div class="card shadow-sm">
             <img class="bd-placeholder-img card-img-top" width="100%" height="225" alt="" src="{{ course.image.url }}" ><rect width="100%" height="100%" fill="#55595c"/></img>

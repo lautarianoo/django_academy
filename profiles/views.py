@@ -77,3 +77,15 @@ class SettingsView(View):
             return HttpResponseRedirect(reverse('profile'))
         return render(request, 'users/settings.html', {'form': form})
 
+class MyAuthorCourseView(View):
+
+    def get(self, request, *args, **kwargs):
+        courses = Course.objects.filter(author=request.user)
+        return render(request, 'users/profile_teach.html', {'courses': courses, 'user': request.user})
+
+class AuthorCourseView(View):
+
+    def get(self, request, *args, **kwargs):
+        courses = Course.objects.filter(author=kwargs.get('pk'))
+        user = User.objects.get(id=kwargs.get('pk'))
+        return render(request, 'users/profile_user_teach.html', {'courses': courses, 'user': user})

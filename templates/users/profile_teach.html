@@ -18,7 +18,7 @@
     {% if user.avatar %}
          <img class="img-fluid" src="{{ user.avatar.url }}" alt="">
     {% endif %}
-<h3>Мои курсы</h3>
+<h3>Мой каталог курсов</h3>
 
 
  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -36,6 +36,7 @@
                     <a class="btn btn-sm btn-outline-secondary">Продолжить</a>
                 </div>
                   <small class="text-muted">{{ course.category.title }}</small>
+                  <a href="#" class="btn btn-sm btn-outline-secondary btn-danger">Удалить</a>
               </div>
             </div>
           </div>
