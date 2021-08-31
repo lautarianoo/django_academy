@@ -30,7 +30,7 @@ class SectionTopic(models.Model):
 class Lesson(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Название урока', blank=True, null=True)
-    content = RichTextUploadingField(verbose_name='Контент урока')
+    content = models.TextField(verbose_name='Контент урока')
     section = models.ForeignKey(SectionTopic, verbose_name='Секция уроков', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -42,7 +42,8 @@ class Lesson(models.Model):
 
 class Test(models.Model):
 
-    text = RichTextUploadingField(verbose_name='Содержимое теста')
+    text = models.TextField(verbose_name='Содержимое теста')
+    section = models.ForeignKey(SectionTopic, on_delete=models.CASCADE, verbose_name='секция')
     right_answer = models.CharField(max_length=400, verbose_name='Правильный ответ')
     variant_1 = models.CharField(max_length=400, verbose_name='Вариант 1')
     variant_2 = models.CharField(max_length=400, verbose_name='Вариант 2')
