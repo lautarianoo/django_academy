@@ -5,7 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class TopicCourse(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Тема курса')
-    course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE, related_name='topics')
 
     def __str__(self):
         return f'{self.title} | {self.course.title}'
@@ -17,7 +17,7 @@ class TopicCourse(models.Model):
 class SectionTopic(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Секция темы')
-    topic = models.ForeignKey(TopicCourse, verbose_name='Тема курса', on_delete=models.CASCADE)
+    topic = models.ForeignKey(TopicCourse, verbose_name='Тема курса', on_delete=models.CASCADE, related_name='sections')
     balls = models.IntegerField(default=1, verbose_name='Количество баллов за урок')
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Lesson(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Название урока', blank=True, null=True)
     content = models.TextField(verbose_name='Контент урока')
-    section = models.ForeignKey(SectionTopic, verbose_name='Секция уроков', on_delete=models.CASCADE)
+    section = models.ForeignKey(SectionTopic, verbose_name='Секция уроков', on_delete=models.CASCADE, related_name='lessons')
 
     def __str__(self):
         return f'{self.title} | {self.section.title}'
