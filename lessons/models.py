@@ -43,7 +43,7 @@ class Lesson(models.Model):
 class Test(models.Model):
 
     text = models.TextField(verbose_name='Содержимое теста')
-    section = models.ForeignKey(SectionTopic, on_delete=models.CASCADE, verbose_name='секция')
+    section = models.ForeignKey(SectionTopic, on_delete=models.CASCADE, verbose_name='секция', related_name='tests')
     right_answer = models.CharField(max_length=400, verbose_name='Правильный ответ')
     variant_1 = models.CharField(max_length=400, verbose_name='Вариант 1')
     variant_2 = models.CharField(max_length=400, verbose_name='Вариант 2')

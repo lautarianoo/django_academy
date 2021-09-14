@@ -6,7 +6,7 @@
             {% for topic in topics %}
                 <h5>{{ topic.title }}</h5>
                 {% for section in topic.sections.all %}
-                    <p><a href="#">{{ section.title }}</a></p>
+                    <p><a href="{% url 'section_edu' pk=topic.course.id id=section.id %}">{{ section.title }}</a></p>
                 {% endfor %}
             {% endfor %}
         </div>

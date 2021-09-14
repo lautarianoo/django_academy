@@ -12,9 +12,16 @@
         </div>
         <div class="col-8">
             <div class="container">
-                <p>{{ tests.text }}</p>
+                <p>{{ test.text }}</p>
                 <h4>Выберите правильный ответ</h4>
-
+                <form action="{% url 'checkanswer' %}" method="get">
+                    {% for name, variant in variants.items %}
+                        <p><label>
+                            <input type="checkbox" name="{{ name }}">{{ variant }}
+                        </label></p>
+                    {% endfor %}
+                    <button class="btn btn-primary" type="submit">Проверить</button>
+                </form>
             </div>
         </div>
     </div>
