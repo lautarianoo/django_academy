@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -53,5 +54,9 @@ class CheckAnswerTestView(View):
     def get(self, request, *args, **kwargs):
         test = Test.objects.get(id=kwargs.get('id'))
         for variant, status in request.GET.items():
-            if test[variant] == test.right_answer:
-                return redirect('test_edu', pk=test.section.topic.course.id, id=test.section, test=test.id)
+            if variant == test.right_answer:
+                request.user.complete_tests.add(test)
+                messages.add_message(request, messages.SUCCESS, 'Ответ правильный. Задание выполнено')
+                return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
+        messages.add_message(request, messages.ERROR, 'Ответ неправильный')
+        return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)

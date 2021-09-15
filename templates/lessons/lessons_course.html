@@ -12,6 +12,12 @@
         </div>
         <div class="col-8">
             <div class="container">
+                {% for lesson2 in lesson.section.lessons.all %}
+                <a {% if lesson2 == lesson %}style="color: grey" {% endif %}  href="{% url 'lesson_edu' pk=lesson.section.topic.course.id id=lesson.section.id lesson=lesson2.id %}">Урок</a>
+            {% endfor %}
+            {% for test2 in lesson.section.tests.all %}
+                <a href="{% url 'test_edu' pk=lesson.section.topic.course.id id=lesson.section.id test=test2.id %}">Тест</a>
+            {% endfor %}
                 <h2 style="font-weight: bold;">{{ lesson.title }}</h2>
                 <p>{{ lesson.content }}</p>
             </div>
