@@ -82,14 +82,6 @@
 
 <main>
     {% block content %}
-        {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
-                          <strong>{{ message }}</strong>
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        {% endfor %}
-                    {% endif %}
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">

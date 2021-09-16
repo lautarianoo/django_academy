@@ -61,3 +61,25 @@ class Course(models.Model):
     class Meta:
         verbose_name = 'Курс'
         verbose_name_plural = 'Курсы'
+
+class Feedback(models.Model):
+
+    MARKS = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5)
+    )
+
+    author = models.ForeignKey(User, verbose_name='Автор отзыва', on_delete=models.CASCADE, related_name='feedbacks')
+    text = models.TextField(max_length=2500, verbose_name='Текст отзыва')
+    course = models.ForeignKey(Course, verbose_name='Курс', on_delete=models.CASCADE, related_name='feedbacks')
+    mark = models.IntegerField(choices=MARKS, verbose_name='Оценка')
+
+    def __str__(self):
+        return f'{self.author.last_name} | {self.course.title}'
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'

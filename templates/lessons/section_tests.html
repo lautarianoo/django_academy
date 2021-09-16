@@ -10,6 +10,14 @@
                 {% endfor %}
             {% endfor %}
         </div>
+            {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                          <strong>{{ message }}</strong>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
         {% if test in request.user.complete_tests.all %}
             <div class="col-8">
             <div class="container">
@@ -34,6 +42,12 @@
             {% else %}
         <div class="col-8">
             <div class="container">
+            {% for lesson in test.section.lessons.all %}
+                <a href="{% url 'lesson_edu' pk=test.section.topic.course.id id=test.section.id lesson=lesson.id %}">Урок</a>
+            {% endfor %}
+            {% for test2 in test.section.tests.all %}
+                <a {% if test2 == test %}style="color: grey" {% endif %} href="{% url 'test_edu' pk=test.section.topic.course.id id=test.section.id test=test2.id %}">Тест</a>
+            {% endfor %}
                 <p>{{ test.text }}</p>
                 <h4>Выберите правильный ответ</h4>
                 <form action="{% url 'checkanswer' id=test.id %}" method="get">

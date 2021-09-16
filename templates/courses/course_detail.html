@@ -57,4 +57,22 @@
             </div>
     </div>
   </div>
+    <div class="row" style="margin-top: 80px">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h2 style="color: grey">Отзывы о курсе</h2>
+        </div>
+            <hr>
+        {% for feedback in feedbacks %}
+<div class="card mt-3">
+  <div class="card-header">
+    {{ feedback.author.first_name }} {{ feedback.author.last_name }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Оценка: {{ feedback.mark }}</h5>
+    <p class="card-text">{{ feedback.text }}</p>
+    <p style="color: #75736c">{{ feedback.date_add }}</p>
+  </div>
+</div>
+    {% endfor %}
+    </div>
 {% endblock content %}

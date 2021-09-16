@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(Course)
+admin.site.register(Feedback)

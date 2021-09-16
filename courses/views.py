@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Category, Course
+from .models import Category, Course, Feedback
 from django.views import View
 
 class BaseView(View):
@@ -21,7 +21,8 @@ class CourseDetailView(View):
 
     def get(self, request, *args, **kwargs):
         course= Course.objects.get(id=kwargs.get('pk'))
-        return render(request, 'courses/course_detail.html', {'course': course})
+        feedbacks = Feedback.objects.filter(course=course)
+        return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks})
 
 class AddMemberCourse(View):
 
