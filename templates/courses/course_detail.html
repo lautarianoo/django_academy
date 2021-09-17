@@ -62,6 +62,13 @@
             <h2 style="color: grey">Отзывы о курсе</h2>
         </div>
             <hr>
+        {% if course in request.user.courses.all %}
+            <h3>Оставить отзыв</h3>
+            <form action="" method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Оставить отзыв</button>
+            </form>
+        {% endif %}
         {% for feedback in feedbacks %}
 <div class="card mt-3">
   <div class="card-header">

@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Category, Course, Feedback
 from django.views import View
+from .forms import FeedbackAddForm
 
 class BaseView(View):
 
@@ -20,9 +21,21 @@ class CategoryView(View):
 class CourseDetailView(View):
 
     def get(self, request, *args, **kwargs):
+        form = FeedbackAddForm()
         course= Course.objects.get(id=kwargs.get('pk'))
         feedbacks = Feedback.objects.filter(course=course)
-        return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks})
+        return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks, 'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = FeedbackAddForm(request.POST or None)
+        if form.is_valid():
+            course = Course.objects.get(id=kwargs.get('pk'))
+            new_feedback = form.save(commit=False)
+            new_feedback.author = request.user
+            new_feedback.course = course
+            new_feedback.save()
+            return redirect('course_detail', pk=course.id)
+        return render(request, 'courses/course_detail.html', {'form': form})
 
 class AddMemberCourse(View):
 
@@ -42,4 +55,3 @@ class SearchCourse(View):
             Q(status_money=request.GET.get('free'))
         ).distinct()
         return render(request, 'base.html', {'courses': courses})
-
