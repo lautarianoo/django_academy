@@ -49,6 +49,7 @@
               <h4 class="text-white"><a href="{% url 'profile' %}" style="color: #fff;">Личный кабинет</a></h4>
           <ul class="list-unstyled">
               {% if request.user.is_authenticated %}
+                  <li><a href="{% url 'my_author_course' %}" class="text-white">Cоздайте свой курс</a></li>
             <li><a href="{% url 'logout' %}" class="text-white">Выйти</a></li>
               {% else %}
                   <li><a href="{% url 'login' %}" class="text-white">Войти</a></li>

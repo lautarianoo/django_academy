@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Category, Course, Feedback
 from django.views import View
-from .forms import FeedbackAddForm
+from .forms import FeedbackAddForm, CourseAddForm
 
 class BaseView(View):
 
@@ -55,3 +55,20 @@ class SearchCourse(View):
             Q(status_money=request.GET.get('free'))
         ).distinct()
         return render(request, 'base.html', {'courses': courses})
+
+class AddCourseView(View):
+
+    def get(self, request, *args, **kwargs):
+        form = CourseAddForm()
+        return render(request, 'courses/add_course.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = CourseAddForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            new_course = form.save(commit=False)
+            new_course.author = request.user
+            new_course.save()
+            new_course.members.add(request.user)
+            new_course.save()
+            return redirect('my_author_course')
+        return render(request, 'courses/add_course.html', {'form': form})
