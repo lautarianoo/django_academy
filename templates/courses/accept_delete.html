@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2 class="text-center">{{ course.title }}</h2>
+
+    <p>Вы уверены что хотите удалить курс</p>
+    <a class="btn btn-primary" href="{% url 'delete_course' pk=course.id %}">Удалить</a>
+
+{% endblock content %}

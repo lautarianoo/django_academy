@@ -7,5 +7,7 @@ urlpatterns = [
     path('add-member/<int:pk>/', AddMemberCourse.as_view(), name='add_member'),
     path('add-course/', AddCourseView.as_view(), name='add_course'),
     path('search', SearchCourse.as_view(), name='search'),
+    path('<int:pk>/accept-delete/', DeleteCourseAcceptView.as_view(), name='accept_delete'),
+    path('<int:pk>/delete/', DeleteCourseView.as_view(), name='delete_course'),
     path('<slug:slug>/', CategoryView.as_view(), name='category'),
 ]

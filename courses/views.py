@@ -72,3 +72,16 @@ class AddCourseView(View):
             new_course.save()
             return redirect('my_author_course')
         return render(request, 'courses/add_course.html', {'form': form})
+
+class DeleteCourseAcceptView(View):
+
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(id=kwargs.get('pk'))
+        return render(request, 'courses/accept_delete.html', {'course': course})
+
+class DeleteCourseView(View):
+
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(id=kwargs.get('pk'))
+        course.delete()
+        return redirect('my_author_course')
