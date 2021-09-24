@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+    {% for topic in topics %}
+       <h2>{{ topic.title }}</h2>
+        <div class="row">
+        {% for section in topic.sections.all  %}
+            <h4>{{ section.title }}</h4>
+
+                <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Название</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for lesson in section.lessons.all %}
+            <tr>
+              <td><a href="#">{{ lesson.title }}</a></td>
+              <td><a class="btn btn-primary" href="#">Редактировать</a></td>
+              <td><a href="#" class="btn btn-danger">Удалить</a></td>
+            </tr>
+          {% endfor %}
+          {% for test in section.tests.all %}
+            <tr>
+              <td><a href="#">{{ test.title }}</a></td>
+              <td><a class="btn btn-primary" href="#">Редактировать</a></td>
+              <td><a href="#" class="btn btn-danger">Удалить</a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock content %}

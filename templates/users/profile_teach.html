@@ -36,7 +36,7 @@
                 <div class="btn-group">
                     <a class="btn btn-sm btn-outline-secondary">Продолжить</a>
                 </div>
-                  <small class="text-muted">{{ course.category.title }}</small>
+                  <a class="btn btn-success" href="{% url 'setting_lesson_test' pk=course.id %}" style="margin: 30px">Редактирование и создание</a>
                   <a href="{% url 'accept_delete' pk=course.id %}" class="btn btn-sm btn-outline-secondary btn-danger">Удалить</a>
               </div>
             </div>

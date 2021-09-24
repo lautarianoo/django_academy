@@ -60,3 +60,9 @@ class CheckAnswerTestView(View):
                 return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
         messages.add_message(request, messages.ERROR, 'Ответ неправильный')
         return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
+
+class CreatingLessonsTest(View):
+
+    def get(self, request, *args, **kwargs):
+        topics = TopicCourse.objects.filter(course=Course.objects.get(id=kwargs.get('pk')))
+        return render(request, 'lessons/create_lessons_test.html', {'topics': topics})
