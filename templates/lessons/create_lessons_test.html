@@ -2,11 +2,25 @@
 
 {% block content %}
     <div class="container">
+    <div class="row mt-5 mb-3">
+        <div class="col-3">
+            <a class="btn btn-success">Cоздать тему</a>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-success">Cоздать подтему</a>
+        </div>
+        <div class="col-3">
+            <a class="btn btn-success">Cоздать урок</a>
+        </div>
+        <div class="col-3">
+            <a class="btn-success btn">Создать тест</a>
+        </div>
+    </div>
     {% for topic in topics %}
-       <h2>{{ topic.title }}</h2>
+       <h1>{{ topic.title }}</h1>
         <div class="row">
         {% for section in topic.sections.all  %}
-            <h4>{{ section.title }}</h4>
+            <h3>{{ section.title }}</h3>
 
                 <table class="table">
           <thead>
@@ -26,7 +40,7 @@
           {% endfor %}
           {% for test in section.tests.all %}
             <tr>
-              <td><a href="#">{{ test.title }}</a></td>
+              <td><a href="#">Тест {{ test.id }}</a></td>
               <td><a class="btn btn-primary" href="#">Редактировать</a></td>
               <td><a href="#" class="btn btn-danger">Удалить</a></td>
             </tr>

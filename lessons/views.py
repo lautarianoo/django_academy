@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import View
 from .models import Lesson, Test, SectionTopic, TopicCourse
 from courses.models import Course
-from .forms import RightAnswerTestForm
+from .forms import LessonCreateForm, TestCreateForm, TopicCreateForm, SectionCreateForm
 
 class TopicsCourseView(View):
 
@@ -66,3 +66,54 @@ class CreatingLessonsTest(View):
     def get(self, request, *args, **kwargs):
         topics = TopicCourse.objects.filter(course=Course.objects.get(id=kwargs.get('pk')))
         return render(request, 'lessons/create_lessons_test.html', {'topics': topics})
+
+class TopicCreate(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'lessons/topic_create.html', {'form': TopicCreateForm()})
+
+    def post(self, request, *args, **kwargs):
+        form = TopicCreateForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('setting_lesson_test', pk=kwargs.get('pk'))
+        return render(request, 'lessons/topic_create.html', {'form': TopicCreateForm()})
+
+
+class SectionCreate(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'lessons/section_create.html', {'form': SectionCreateForm()})
+
+    def post(self, request, *args, **kwargs):
+        form = SectionCreateForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('setting_lesson_test', pk=kwargs.get('pk'))
+        return render(request, 'lessons/section_create.html', {'form': SectionCreateForm()})
+
+
+class LessonCreate(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'lessons/lesson_create.html', {'form': LessonCreateForm()})
+
+    def post(self, request, *args, **kwargs):
+        form = LessonCreateForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('setting_lesson_test', pk=kwargs.get('pk'))
+        return render(request, 'lessons/lesson_create.html', {'form': LessonCreateForm()})
+
+
+class TestCreate(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'lessons/test_create.html', {'form': TestCreateForm()})
+
+    def post(self, request, *args, **kwargs):
+        form = TestCreateForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('setting_lesson_test', pk=kwargs.get('pk'))
+        return render(request, 'lessons/test_create.html', {'form': TestCreateForm()})
