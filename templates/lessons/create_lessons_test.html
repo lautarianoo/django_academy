@@ -4,16 +4,16 @@
     <div class="container">
     <div class="row mt-5 mb-3">
         <div class="col-3">
-            <a class="btn btn-success">Cоздать тему</a>
+            <a class="btn btn-success" href="{% url 'topic_create' pk=course.id %}">Cоздать тему</a>
         </div>
         <div class="col-3">
-            <a class="btn btn-success">Cоздать подтему</a>
+            <a class="btn btn-success" href="{% url 'section_create' pk=course.id %}">Cоздать подтему</a>
         </div>
         <div class="col-3">
-            <a class="btn btn-success">Cоздать урок</a>
+            <a class="btn btn-success" href="{% url 'lesson_create' pk=course.id %}">Cоздать урок</a>
         </div>
         <div class="col-3">
-            <a class="btn-success btn">Создать тест</a>
+            <a class="btn-success btn" href="{% url 'test_create' pk=course.id %}">Создать тест</a>
         </div>
     </div>
     {% for topic in topics %}

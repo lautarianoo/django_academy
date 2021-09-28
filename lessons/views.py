@@ -64,8 +64,9 @@ class CheckAnswerTestView(View):
 class CreatingLessonsTest(View):
 
     def get(self, request, *args, **kwargs):
-        topics = TopicCourse.objects.filter(course=Course.objects.get(id=kwargs.get('pk')))
-        return render(request, 'lessons/create_lessons_test.html', {'topics': topics})
+        course = Course.objects.get(id=kwargs.get('pk'))
+        topics = TopicCourse.objects.filter(course=course)
+        return render(request, 'lessons/create_lessons_test.html', {'topics': topics, 'course': course})
 
 class TopicCreate(View):
 

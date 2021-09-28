@@ -16,7 +16,7 @@ class TopicCourse(models.Model):
 
 class SectionTopic(models.Model):
 
-    title = models.CharField(max_length=100, verbose_name='Секция темы')
+    title = models.CharField(max_length=100, verbose_name='Название')
     topic = models.ForeignKey(TopicCourse, verbose_name='Тема курса', on_delete=models.CASCADE, related_name='sections')
     balls = models.IntegerField(default=1, verbose_name='Количество баллов за урок')
 
