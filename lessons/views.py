@@ -56,6 +56,7 @@ class CheckAnswerTestView(View):
         for variant, status in request.GET.items():
             if variant == test.right_answer:
                 request.user.complete_tests.add(test)
+                request.user.balls += 1
                 messages.add_message(request, messages.SUCCESS, 'Ответ правильный. Задание выполнено')
                 return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
         messages.add_message(request, messages.ERROR, 'Ответ неправильный')

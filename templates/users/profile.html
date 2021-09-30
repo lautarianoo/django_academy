@@ -3,6 +3,7 @@
 {% block content %}
     <div class="container">
 <div class="row"><h2>{{ user.first_name }} {{ user.last_name }}</h2>
+    <p>Знания - {{ user.balls }}</p>
     <div class="col-2">
         <a href="{% url 'settings' %}">Настройки</a>
     </div>

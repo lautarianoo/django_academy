@@ -55,6 +55,7 @@ class UserAcademy(AbstractBaseUser):
     complete_tests = models.ManyToManyField('lessons.Test', verbose_name='Выполненные тесты', related_name='user')
     avatar = models.ImageField(verbose_name='Аватарка', blank=True, null=True)
     company = models.BooleanField(verbose_name='Компания или нет', default=False)
+    balls = models.IntegerField(verbose_name='Количество баллов за все курсы', default=0)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
