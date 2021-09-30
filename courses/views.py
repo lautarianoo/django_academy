@@ -47,13 +47,22 @@ class AddMemberCourse(View):
 class SearchCourse(View):
 
     def get(self, request, *args, **kwargs):
-
-        courses = Course.objects.filter(
-            Q(title__icontains=request.GET.get('q')) |
-            Q(category__title__icontains=request.GET.get('q')) |
-            Q(status_certificate=request.GET.get('cert')) |
-            Q(status_money=request.GET.get('free'))
-        ).distinct()
+        filters = {
+            'title__icontains': request.GET.get('q'),
+            'status_certificate': request.GET.get('cert'),
+            'status_money': request.GET.get('free')
+        }
+        for key in list(filters.keys()):
+            if key == 'status_certificate' and filters[key]:
+                filters[key] = True
+            if not filters[key] and key != 'status_money':
+                filters.pop(key)
+        if not filters['status_money']:
+            filters.pop('status_money')
+        else:
+            filters['status_money'] = False
+        print(filters)
+        courses = Course.objects.filter(**filters)
         return render(request, 'base.html', {'courses': courses})
 
 class AddCourseView(View):

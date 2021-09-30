@@ -8,7 +8,7 @@
           <img src="{{ course.image.url }}" alt="" height="100" width="100" style="border-radius: 10px; margin-bottom: 30px">
         <h1 class="fw-light">{{ course.title }}</h1>
           <p class="lead text-muted">{{ course.short_description }}</p>
-          <h6>Сертификат Django Academy</h6>
+          <h6>{% if course.status_certificate %}Сертификат Django Academy{% endif %}</h6>
           <p style="margin-left: 80%">Преподователь {{ course.author.first_name }} {{ course.author.last_name }}</p>
       </div>
 
