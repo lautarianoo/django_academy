@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import datetime
 import os
 from pathlib import Path
 from .ckeditor import *
@@ -136,6 +137,38 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.AllowAny',
+    ),
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework_json_api.pagination.PageNumberPagination',
+}
+
+
+JWT_AUTH = {
+     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+     'JWT_ALLOW_REFRESH': True,
+     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7)  # default
+ }
+
+DJOSER = {
+     'SEND_ACTIVATION_EMAIL': True,
+     # 'SEND_CONFIRMATION_EMAIL': True,
+     'ACTIVATION_URL': 'auth/activate/{uid}/{token}/',
+     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+     'PASSWORD_RESET_CONFIRM_URL': 'auth/reset/confirm/{uid}/{token}/',
+     'TOKEN_MODEL': None
+ }
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static_dev'),
