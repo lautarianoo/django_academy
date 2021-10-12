@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load account socialaccount %}
 
 {% block content %}
 
@@ -9,6 +10,7 @@
  <form class="form-horizontal" method="post">
 	 	{% csrf_token %}
 		 <span class="heading">АВТОРИЗАЦИЯ</span>
+     {% get_providers as socialaccount_providers %}
 		 <div class="form-group">
 		 <input type="email" class="form-control" id="inputEmail" placeholder="E-mail" name="email">
 		 <i class="fa fa-user"></i>
