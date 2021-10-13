@@ -1,10 +1,11 @@
 from django.contrib.auth import logout, authenticate, login, get_user_model
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from .forms import LoginForm, RegisterForm, SettingsForm
+from .forms import LoginForm, RegisterForm, SettingsForm, EmailAcceptForm
 from courses.models import Course
+from utils.send_mail import generate_code, send_email
 
 User = get_user_model()
 
@@ -41,6 +42,7 @@ class RegisterView(View):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password1'])
             new_user.save()
+            send_email(new_user.email, new_user.code_for_mail)
             return HttpResponseRedirect(reverse('login'))
         return render(request, 'users/register.html', {'form': form})
 
@@ -89,3 +91,15 @@ class AuthorCourseView(View):
         courses = Course.objects.filter(author=kwargs.get('pk'))
         user = User.objects.get(id=kwargs.get('pk'))
         return render(request, 'users/profile_user_teach.html', {'courses': courses, 'user': user})
+
+class AcceptEmailView(View):
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.status_email:
+            print(request.GET, request.user.code_for_mail)
+            if request.GET['code'] == request.user.code_for_mail:
+                request.user.status_email = True
+                request.user.save()
+                return redirect('settings')
+        return redirect('profile')
+

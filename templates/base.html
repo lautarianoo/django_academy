@@ -77,7 +77,11 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
     </div>
+      {% if not request.user.status_email %}
+      <a class="text-right" style="margin-right: 50px; text-decoration: none; color:white;" href="{% url 'settings' %}">Подтвердите Email</a>
+  {% endif %}
   </div>
 </header>
 

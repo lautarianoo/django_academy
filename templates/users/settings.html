@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+    <div class="container">
     <form method="post" action="" class="form-control" style="margin-top: 10px">
         {% csrf_token %}
         {{ form.as_p }}
@@ -9,8 +9,12 @@
     </form>
     <hr>
     {% if not request.user.status_email %}
-        <H3>EMAIL не подтверждён</H3>
-        <a href="" style="text-decoration: none">ПОЛУЧИТЬ КОД И ПОДТВЕРДИТЬ</a>
+        <h6>Введите код который был отправлен вам на почту</h6>
+    <form class="form-control" method="get" action="{% url 'acceptmail' %}">
+        <label for="codei">Код</label>
+        <input type="text" id="codei" name="code">
+        <button type="submit" class="btn btn-success">Подтвердить</button>
+    </form>
     {% endif %}
-
+    </div>
 {% endblock content %}

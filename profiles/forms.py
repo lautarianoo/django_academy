@@ -37,3 +37,7 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = UserAcademy
         fields = ('phone', 'first_name', 'last_name', 'avatar')
+
+class EmailAcceptForm(forms.Form):
+
+    code = forms.CharField(label='Код')

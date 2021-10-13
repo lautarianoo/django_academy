@@ -9,7 +9,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-
+from utils.send_mail import generate_code
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -59,6 +59,7 @@ class UserAcademy(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
+    code_for_mail = generate_code()
     objects = MyUserManager()
 
     def __str__(self):
