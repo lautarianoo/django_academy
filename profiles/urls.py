@@ -10,5 +10,6 @@ urlpatterns = [
     path('settings/', SettingsView.as_view(), name='settings'),
     path('profile/teach/', MyAuthorCourseView.as_view(), name='my_author_course'),
     path('<int:pk>/teach/', AuthorCourseView.as_view(), name='author_course'),
-    path('acceptmail/', AcceptEmailView.as_view(), name='acceptmail')
+    path('acceptmail/', EmailView.as_view(), name='email-acc'),
+    path('acceptmail/<str:code>/', AcceptEmailView.as_view(), name='acceptmail')
 ]

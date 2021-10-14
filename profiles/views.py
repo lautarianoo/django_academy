@@ -42,7 +42,6 @@ class RegisterView(View):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password1'])
             new_user.save()
-            send_email(new_user.email, new_user.code_for_mail)
             return HttpResponseRedirect(reverse('login'))
         return render(request, 'users/register.html', {'form': form})
 
@@ -92,12 +91,18 @@ class AuthorCourseView(View):
         user = User.objects.get(id=kwargs.get('pk'))
         return render(request, 'users/profile_user_teach.html', {'courses': courses, 'user': user})
 
+class EmailView(View):
+
+    def get(self, request, *args, **kwargs):
+        code = generate_code()
+        send_email(request.user.email, code)
+        return render(request, 'users/accept_email.html', {'code': code})
+
 class AcceptEmailView(View):
 
     def get(self, request, *args, **kwargs):
         if not request.user.status_email:
-            print(request.GET, request.user.code_for_mail)
-            if request.GET['code'] == request.user.code_for_mail:
+            if request.GET['code'] == kwargs.get('code'):
                 request.user.status_email = True
                 request.user.save()
                 return redirect('settings')

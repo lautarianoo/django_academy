@@ -9,12 +9,8 @@
     </form>
     <hr>
     {% if not request.user.status_email %}
-        <h6>Введите код который был отправлен вам на почту</h6>
-    <form class="form-control" method="get" action="{% url 'acceptmail' %}">
-        <label for="codei">Код</label>
-        <input type="text" id="codei" name="code">
-        <button type="submit" class="btn btn-success">Подтвердить</button>
-    </form>
+        <h2>EMAIL не подтверждён</h2>
+        <h4><a href="{% url 'email-acc' %}">Получить код и подтвердить EMAIL</a></h4>
     {% endif %}
     </div>
 {% endblock content %}

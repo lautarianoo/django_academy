@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container mt-5">
     <h6>Введите код который был отправлен вам на почту</h6>
-    <form class="form-control" method="get" href="">
+    <form class="form-control" method="get" href="{% url 'acceptmail' code=code %}">
         <label for="codei">Код</label>
         <input type="text" id="codei" name="code">
         <button type="submit" class="btn btn-success">Подтвердить</button>
