@@ -4,14 +4,16 @@
     <div class="row">
         <div class="col-3" style="margin-left: 20px;">
             {% for topic in topics %}
-                <h5>{{ topic.title }}</h5>
+                <h5 class="mt-4">{{ topic.title }}</h5>
                 {% for section in topic.sections.all %}
-                    <p><a href="{% url 'section_edu' pk=topic.course.id id=section.id %}">{{ section.title }}</a></p>
+                    <ul class="list-group">
+                 <li class="list-group-item mb-2" ><a href="{% url 'section_edu' pk=topic.course.id id=section.id %}" style="text-decoration: none;">{{ section.title }}</a></li>
+                </ul>
                 {% endfor %}
             {% endfor %}
         </div>
         <div class="col-8">
-            <div class="container">
+            <div class="container mt-4">
                 {% for lesson2 in lesson.section.lessons.all %}
                 <a {% if lesson2 == lesson %}style="color: grey" {% endif %}  href="{% url 'lesson_edu' pk=lesson.section.topic.course.id id=lesson.section.id lesson=lesson2.id %}">Урок</a>
             {% endfor %}
