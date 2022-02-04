@@ -61,7 +61,6 @@ class SearchCourse(View):
             filters.pop('status_money')
         else:
             filters['status_money'] = False
-        print(filters)
         courses = Course.objects.filter(**filters)
         return render(request, 'base.html', {'courses': courses})
 

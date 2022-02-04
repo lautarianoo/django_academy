@@ -7,7 +7,7 @@
 
 
  <div class="col-md-offset-3 col-md-7 mb-5">
- <form class="form-horizontal" method="post">
+ <form class="form-horizontal m-4"method="post">
 	 	{% csrf_token %}
 		 <span class="heading">АВТОРИЗАЦИЯ</span>
      {% get_providers as socialaccount_providers %}
@@ -16,7 +16,7 @@
 		 <i class="fa fa-user"></i>
 		 </div>
 		 <div class="form-group help">
-		 <input type="password" class="form-control" id="inputPassword1" placeholder="Password" name="password">
+		 <input type="password" class="form-control mt-2" id="inputPassword1" placeholder="Password" name="password">
 		 <i class="fa fa-lock"></i>
 		 <a href="#" class="fa fa-question-circle"></a>
 		 </div>
