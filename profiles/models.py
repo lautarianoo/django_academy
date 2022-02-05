@@ -52,7 +52,7 @@ class UserAcademy(AbstractBaseUser):
     username = models.CharField(max_length=100, verbose_name='Прозвище юзера', null=True)
     email = models.EmailField(verbose_name='Email', unique=True)
     status_email = models.BooleanField(default=False, verbose_name='Подтверждён email')
-    complete_tests = models.ManyToManyField('lessons.Test', verbose_name='Выполненные тесты', related_name='user')
+    complete_tests = models.ManyToManyField('lessons.ContentUnit', verbose_name='Выполненные тесты', related_name='user')
     avatar = models.ImageField(verbose_name='Аватарка', blank=True, null=True)
     company = models.BooleanField(verbose_name='Компания или нет', default=False)
     balls = models.IntegerField(verbose_name='Количество баллов за все курсы', default=0)

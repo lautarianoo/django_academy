@@ -34,7 +34,7 @@
             {% elif request.user in course.members.all %}
                 <div style="margin-left: 20px">
                     <div class="row">
-                        <a href="{% url 'edu_course' pk=course.id %}" class="btn btn-success" style="font-size: x-large; padding: 0.8rem 2rem;">Продолжить</a>
+                        <a href="{% url 'content_view' course_id=course.id  %}" class="btn btn-success" style="font-size: x-large; padding: 0.8rem 2rem;">Продолжить</a>
                     </div>
                 </div>
             {% else %}

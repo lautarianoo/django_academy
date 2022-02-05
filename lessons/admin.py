@@ -3,5 +3,5 @@ from .models import *
 
 admin.site.register(TopicCourse)
 admin.site.register(SectionTopic)
-admin.site.register(Lesson)
-admin.site.register(Test)
+admin.site.register(ContentUnit)
+admin.site.register(VariantTest)

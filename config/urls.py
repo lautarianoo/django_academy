@@ -24,7 +24,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('users/', include('profiles.urls')),
-    path('education/', include('lessons.urls')),
+    path('lesson/', include('lessons.urls')),
     path('pay/', include('pay.urls')),
     path('api/v1/', include('api.v1.urls')),
     path('', include('courses.urls')),
