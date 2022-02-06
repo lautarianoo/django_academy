@@ -54,3 +54,29 @@
 .message--user-2 .message__text {
   background-color: #69b4f3;
 }
+
+.base {
+ /* Установите 100% width и 1000px min-width*/
+ width: auto;
+ margin-left: 0px;
+ margin-right: 0px;
+ min-width: 1000px;
+ padding: 0px;
+display:table;
+ }
+.base-row {
+ Display: table-row;
+ }
+.cell22 {
+ display: table-cell;
+ width: 33%;
+ }
+.cell1 {
+ background-color: #f00;
+ }
+.cell2 {
+ background-color: #0f0;
+ }
+.cell3 {
+ background-color: #00f;
+ }

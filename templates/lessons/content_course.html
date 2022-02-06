@@ -2,11 +2,34 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-3">
-            <h3>{{ topic.course.title }}</h3>
+        <div style="height: 100%" class="col-3 bg-dark">
+            <h4 style="color: white;" class="m-3">{{ topic.course.title }}</h4>
+            <hr style="color: white;">
+            <div style="overflow-y: scroll;">
+                {% for topic in topics %}
+                <h5 style="color: white" class="m-3">{{ topic.title }}</h5>
+                    <ul class="list-group">
+                        {% for section in topic.sections.all %}
+                            <li style="margin-left: 10%; margin-bottom: 5%;" class="list-group-item" ><a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit=1" style="text-decoration: none;">
+                                {{ section.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </div>
         </div>
         <div class="col-9">
 
+                {% for unit in section.units.all %}
+                    <div class="mt-1">
+                        <svg height="30" width="30">
+                         <circle cx="15" cy="15" r="13" stroke="black" fill="green" />
+                    </svg>
+                    </div>
+                {% endfor %}
+
+            <div class="container">
+
+            </div>
         </div>
     </div>
 {% endblock content %}

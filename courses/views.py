@@ -24,7 +24,8 @@ class CourseDetailView(View):
         form = FeedbackAddForm()
         course= Course.objects.get(id=kwargs.get('pk'))
         feedbacks = Feedback.objects.filter(course=course)
-        return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks, 'form': form})
+        return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks, 'form': form,
+                                                              'section': course.topics.all()[0].sections.all()[0]})
 
     def post(self, request, *args, **kwargs):
         form = FeedbackAddForm(request.POST or None)

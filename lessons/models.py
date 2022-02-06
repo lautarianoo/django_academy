@@ -33,12 +33,13 @@ class VariantTest(models.Model):
 
 class ContentUnit(models.Model):
 
+    step_id = models.PositiveIntegerField(default=1, verbose_name='Номер степа')
     title = models.CharField(max_length=100, verbose_name='Название урока', blank=True, null=True)
     content = models.TextField(verbose_name='Контент урока', blank=True, null=True)
     section = models.ForeignKey(SectionTopic, verbose_name='Секция уроков', on_delete=models.CASCADE, related_name='units', blank=True, null=True)
     test = models.BooleanField(default=False)
-    variants = models.ManyToManyField(VariantTest, verbose_name='Варианты ответа', related_name='variant_unit', blank=True, null=True)
-    right_variants = models.ManyToManyField(VariantTest, verbose_name='Правильный вариант', related_name='right_variant_unit', null=True, blank=True)
+    variants = models.ManyToManyField(VariantTest, verbose_name='Варианты ответа', related_name='variant_unit', blank=True)
+    right_variants = models.ManyToManyField(VariantTest, verbose_name='Правильный вариант', related_name='right_variant_unit', blank=True)
     multiple_choice = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
 
