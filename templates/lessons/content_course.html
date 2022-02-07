@@ -1,35 +1,72 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="row">
-        <div style="height: 100%" class="col-3 bg-dark">
-            <h4 style="color: white;" class="m-3">{{ topic.course.title }}</h4>
+    <div class="row" style="width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;">
+        <div style="height: 100%" class="col-2 bg-dark">
+            <h5 style="color: white;" class="m-3">{{ topic.course.title }}</h5>
             <hr style="color: white;">
             <div style="overflow-y: scroll;">
                 {% for topic in topics %}
-                <h5 style="color: white" class="m-3">{{ topic.title }}</h5>
-                    <ul class="list-group">
-                        {% for section in topic.sections.all %}
-                            <li style="margin-left: 10%; margin-bottom: 5%;" class="list-group-item" ><a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit=1" style="text-decoration: none;">
-                                {{ section.title }}</a></li>
+                <h6 style="color: white" class="m-3">{{ topic.title }}</h6>
+                    <ul class="">
+                        {% for section2 in topic.sections.all %}
+                            {% if section2.units.all %}
+                                {% if section2 == section %}
+                                <li style="margin-left: 10%; margin-bottom: 5%;background-color: green;" class="" ><a href="{% url 'content_view' course_id=topic.course.id section_id=section2.id %}?unit=1" style="text-decoration: none;color: white;">
+                                    {{ section2.title }}</a></li>
+                                {% else %}
+                                    <li style="margin-left: 10%; margin-bottom: 5%;" class="" ><a href="{% url 'content_view' course_id=topic.course.id section_id=section2.id %}?unit=1" style="text-decoration: none;color: white;">
+                                    {{ section2.title }}</a></li>
+                                {% endif %}
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 {% endfor %}
             </div>
         </div>
-        <div class="col-9">
-
-                {% for unit in section.units.all %}
+        <div class="col-8">
+        <h5 class="m-3">{{ section.title }}</h5>
+                    <hr>
+            <div class="row">
+                <div class="col-1">
+                {% for unit2 in section.units.all %}
                     <div class="mt-1">
-                        <svg height="30" width="30">
-                         <circle cx="15" cy="15" r="13" stroke="black" fill="green" />
-                    </svg>
+                        {% if unit2 == unit %}
+                            <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ unit2.step_id }}"><svg height="30" width="30">
+                             <circle cx="15" cy="15" r="13" stroke="black" fill="red" />
+                            </svg></a>
+                        {% else %}
+                            <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ unit2.step_id }}"><svg height="30" width="30">
+                             <circle cx="15" cy="15" r="13" stroke="black" fill="green" />
+                            </svg></a>
+                        {% endif %}
                     </div>
                 {% endfor %}
+                </div>
+            <div class="col-11">
+                <div class="container" style="margin: 2%">
+                    {% if not unit.test %}
+                        <h4 style="text-align: center; font-size: xx-large;">{{ unit.title }}</h4>
+                        <p style="font-weight: 600">{{ unit.content }}</p>
+                    {% else %}
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-5">
 
-            <div class="container">
-
+                    </div>
+                    <div class="col-7">
+                        {% if section.len_step != next_step_id %}
+                            <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ next_step_id }}" class="btn btn-success">Следующий шаг -></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock content %}

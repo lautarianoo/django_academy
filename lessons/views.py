@@ -13,8 +13,9 @@ class ContentCourseView(View):
             return redirect('profile')
         topics = TopicCourse.objects.all()
         section = SectionTopic.objects.get(id=kwargs.get('section_id'))
-        unit = ContentUnit.objects.get(section=section, step_id=request.GET.get('unit'))
-        return render(request, 'lessons/content_course.html', {'section': section, 'unit': unit, 'topics': topics, 'topic': topics[0]})
+        unit = ContentUnit.objects.filter(section=section, step_id=request.GET.get('unit')).first()
+        return render(request, 'lessons/content_course.html', {'section': section, 'unit': unit, 'topics': topics, 'topic': topics[0],
+                                                               'next_step_id': unit.step_id + 1})
 
 #class CheckAnswerTestView(View):
 #

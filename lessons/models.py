@@ -23,6 +23,9 @@ class SectionTopic(models.Model):
     def __str__(self):
         return f'{self.title} | {self.topic.title}'
 
+    def len_step(self):
+        return self.units.last().step_id + 1
+
     class Meta:
         verbose_name = 'Cекция'
         verbose_name_plural = 'Секции'
