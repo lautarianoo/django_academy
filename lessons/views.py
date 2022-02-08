@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from .models import ContentUnit, SectionTopic, TopicCourse
+from .models import ContentUnit, SectionTopic, TopicCourse, VariantTest
 from courses.models import Course
 
 class ContentCourseView(View):
@@ -17,15 +17,18 @@ class ContentCourseView(View):
         return render(request, 'lessons/content_course.html', {'section': section, 'unit': unit, 'topics': topics, 'topic': topics[0],
                                                                'next_step_id': unit.step_id + 1})
 
-#class CheckAnswerTestView(View):
-#
-#    def get(self, request, *args, **kwargs):
-#        test = Test.objects.get(id=kwargs.get('id'))
-#        for variant, status in request.GET.items():
-#            if variant == test.right_answer:
-#                request.user.complete_tests.add(test)
-#                request.user.balls += 1
-#                messages.add_message(request, messages.SUCCESS, 'Ответ правильный. Задание выполнено')
-#                return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
-#        messages.add_message(request, messages.ERROR, 'Ответ неправильный')
-#        return redirect('test_edu', pk=test.section.topic.course.id, id=test.section.id, test=test.id)
+class CheckAnswerTestView(View):
+
+    def get(self, request, *args, **kwargs):
+        test = ContentUnit.objects.filter(id=kwargs.get('test_id')).first()
+        true_list = []
+        if len(request.GET.getlist('select')) == len(test.right_variants.all()):
+            for select_variant_id in request.GET.getlist('select'):
+                variant = VariantTest.objects.filter(id=select_variant_id).first()
+                for right_variant in test.right_variants.all():
+                    if variant.variant == right_variant.variant:
+                        true_list.append(True)
+                        break
+                    else:
+                        true_list.append(False)
+

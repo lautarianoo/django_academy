@@ -49,9 +49,40 @@
             <div class="col-11">
                 <div class="container" style="margin: 2%">
                     {% if not unit.test %}
-                        <h4 style="text-align: center; font-size: xx-large;">{{ unit.title }}</h4>
-                        <p style="font-weight: 600">{{ unit.content }}</p>
+                        <h4 style="text-align: center; font-size: xx-large; margin-bottom: 4%">{{ unit.title }}</h4>
+                        <p>{{ unit.content }}</p>
                     {% else %}
+                        {% if unit.multiple_choice %}
+                            <h4 style="text-align: center; font-size: xx-large; margin-bottom: 4%;">{{ unit.title }}</h4>
+                            <p>{{ unit.content }}</p>
+                            <h5 style="font-weight: bold" class="mt-5">Выберите подходящие ответы из списка</h5>
+                            <form action="{% url 'check_answer' test_id=unit.id %}" method="get">
+                                {% for variant in unit.variants.all %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ variant.id }}" name="select" id="defaultCheck1">
+                                        <label style="font-size: large" class="form-check-label" for="defaultCheck1">
+                                            {{ variant.variant }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            <button type="submit" class="btn btn-success mt-4">Отправить</button>
+                            </form>
+                        {% else %}
+                            <h4 style="text-align: center; font-size: xx-large; margin-bottom: 4%;">{{ unit.title }}</h4>
+                            <p>{{ unit.content }}</p>
+                            <h5 style="font-weight: bold" class="mt-5">Выберите подходящий ответ из списка</h5>
+                            <form method="get" action="{% url 'check_answer' test_id=unit.id %}">
+                                {% for variant in unit.variants.all %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" value="{{ variant.id }}" id="defaultCheck1" name="select_variant">
+                                        <label style="font-size: large" class="form-check-label" for="defaultCheck1">
+                                            {{ variant.variant }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            <button type="submit" class="btn btn-success mt-4">Отправить</button>
+                            </form>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="row">
@@ -63,6 +94,8 @@
                             <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ next_step_id }}" class="btn btn-success">Следующий шаг -></a>
                         {% endif %}
                     </div>
+                    <hr class="mt-5">
+                        <h4 style="color: lightgrey">Комментарии</h4>
                 </div>
             </div>
             </div>
