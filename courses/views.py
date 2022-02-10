@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Category, Course, Feedback
+from lessons.models import TopicCourse
 from django.views import View
 from .forms import FeedbackAddForm, CourseAddForm
 
@@ -94,3 +95,10 @@ class DeleteCourseView(View):
         course = Course.objects.get(id=kwargs.get('pk'))
         course.delete()
         return redirect('my_author_course')
+
+class CreateAndEdit(View):
+
+    def get(self, request, *args, **kwargs):
+        course = Course.objects.get(id=kwargs.get('pk'))
+        topics = TopicCourse.objects.filter(course=course)
+        return render(request, 'courses/edit_and_create.html', {'topics': topics, 'course': course})

@@ -107,4 +107,3 @@ class AcceptEmailView(View):
                 request.user.save()
                 return redirect('settings')
         return redirect('profile')
-

@@ -22,13 +22,25 @@ class CheckAnswerTestView(View):
     def get(self, request, *args, **kwargs):
         test = ContentUnit.objects.filter(id=kwargs.get('test_id')).first()
         true_list = []
-        if len(request.GET.getlist('select')) == len(test.right_variants.all()):
+        r_variants = [variant.variant for variant in test.right_variants.all()]
+        if len(request.GET.getlist('select')) == len(test.right_variants.all()) or not test.multiple_choice:
             for select_variant_id in request.GET.getlist('select'):
-                variant = VariantTest.objects.filter(id=select_variant_id).first()
-                for right_variant in test.right_variants.all():
-                    if variant.variant == right_variant.variant:
-                        true_list.append(True)
-                        break
-                    else:
-                        true_list.append(False)
+                variant = VariantTest.objects.filter(id=int(select_variant_id)).first()
+                if variant.variant in r_variants:
+                    true_list.append(True)
+                else:
+                    true_list.append(False)
+            if all(true_list):
+                request.user.complete_tests.add(test)
+                response = redirect('content_view', course_id=test.section.topic.course.id, section_id=test.section.id)
+                response['Location'] += '?unit=' + str(test.id)
+                return response
+        messages.add_message(request, messages.ERROR, 'Ответ неправильный')
+        response = redirect('content_view', course_id=test.section.topic.course.id, section_id=test.section.id)
+        response['Location'] += '?unit=' + str(test.id)
+        return response
 
+class CreateTopicView(View):
+
+    def get(self, request, *args, **kwargs):
+        pass

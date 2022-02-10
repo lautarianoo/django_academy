@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/accept-delete/', DeleteCourseAcceptView.as_view(), name='accept_delete'),
     path('<int:pk>/delete/', DeleteCourseView.as_view(), name='delete_course'),
     path('<slug:slug>/', CategoryView.as_view(), name='category'),
+    path('edit-create/<int:pk>', CreateAndEdit.as_view(), name='create_and_edit')
 ]
