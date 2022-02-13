@@ -40,7 +40,12 @@ class CheckAnswerTestView(View):
         response['Location'] += '?unit=' + str(test.id)
         return response
 
-class CreateTopicView(View):
+class CreateTopic(View):
 
     def get(self, request, *args, **kwargs):
-        pass
+        return render(request, 'lessons/create_topic.html', {})
+
+    def post(self, request, *args, **kwargs):
+        new_topic = TopicCourse.objects.create(title=request.POST.get('name', course=Course.objects.get(id=kwargs.get('course_id'))))
+        new_topic.save()
+        return redirect('create_and_edit', pk=kwargs.get('course_id'))
