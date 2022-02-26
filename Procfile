@@ -1,1 +1,1 @@
-web: gunicorn techno_websiteMy.wsgi
+web: gunicorn config.wsgi
