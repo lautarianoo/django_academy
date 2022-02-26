@@ -33,8 +33,6 @@
                   {% elif course.price and request.user not in course.members.all %}
                     <p>{{ course.price }} Р</p>
                     <a class="btn btn-sm btn-outline-secondary">Купить</a>
-                  {% else %}
-                    <a href="{% url 'edu_course' pk=course.id %}" class="btn btn-sm btn-outline-secondary">Продолжить</a>
                   {% endif %}
                 </div>
                 <small class="text-muted">{{ course.get_members_count }} человек(а)</small>

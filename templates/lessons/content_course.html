@@ -87,10 +87,6 @@
                                             </label>
                                         </div>
                                     {% endfor %}
-                                {% if section.len_step != next_step_id %}
-                                    <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ next_step_id }}" class="btn btn-success">
-                                        Следующий шаг -></a>
-                                {% endif %}
                             </form>
                             {% endif %}
                         {% else %}
@@ -128,10 +124,6 @@
                                             </label>
                                         </div>
                                     {% endfor %}
-                                {% if section.len_step != next_step_id %}
-                                    <a href="{% url 'content_view' course_id=topic.course.id section_id=section.id %}?unit={{ next_step_id }}" class="btn btn-success">
-                                        Следующий шаг -></a>
-                                {% endif %}
                             </form>
                             {% endif %}
                         {% endif %}
