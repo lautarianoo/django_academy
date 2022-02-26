@@ -99,7 +99,6 @@ sqlparse==0.4.2
 termcolor==1.1.0
 tifffile==2022.2.9
 Twisted==21.7.0
-twisted-iocpsupport==1.0.2
 txaio==21.2.1
 typing-extensions==4.0.1
 uritemplate==4.1.1
