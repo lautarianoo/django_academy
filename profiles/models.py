@@ -51,6 +51,7 @@ class UserAcademy(AbstractBaseUser):
     phone = models.CharField(max_length=30, verbose_name='Номер телефона')
     username = models.CharField(max_length=100, verbose_name='Прозвище юзера', null=True)
     email = models.EmailField(verbose_name='Email', unique=True)
+    last_query = models.TextField(verbose_name='Query names', blank=True, null=True)
     status_email = models.BooleanField(default=False, verbose_name='Подтверждён email')
     complete_tests = models.ManyToManyField('lessons.ContentUnit', verbose_name='Выполненные тесты', related_name='user', blank=True)
     avatar = models.ImageField(verbose_name='Аватарка', blank=True, null=True)
