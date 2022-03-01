@@ -24,7 +24,16 @@ class CheckAnswerTestView(View):
         true_list = []
         r_variants = [variant.variant for variant in test.right_variants.all()]
         if len(request.GET.getlist('select')) == len(test.right_variants.all()) or not test.multiple_choice:
-            for select_variant_id in request.GET.getlist('select'):
+            if test.multiple_choice:
+                for select_variant_id in request.GET.getlist('select'):
+                    variant = VariantTest.objects.filter(id=int(select_variant_id)).first()
+                    if variant.variant in r_variants:
+                        true_list.append(True)
+                    else:
+                        true_list.append(False)
+            else:
+                select_variant_id = request.GET.get('select_variant')
+                print(select_variant_id)
                 variant = VariantTest.objects.filter(id=int(select_variant_id)).first()
                 if variant.variant in r_variants:
                     true_list.append(True)
