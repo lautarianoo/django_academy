@@ -25,6 +25,7 @@ class CourseDetailView(View):
         form = FeedbackAddForm()
         course= Course.objects.get(id=kwargs.get('pk'))
         feedbacks = Feedback.objects.filter(course=course)
+        request.user.last_query = f"{request.user.last_query} {course.objects.category.title}"
         return render(request, 'courses/course_detail.html', {'course': course, 'feedbacks': feedbacks, 'form': form,
                                                               'section': course.topics.all()[0].sections.all()[0]})
 
@@ -64,6 +65,7 @@ class SearchCourse(View):
         else:
             filters['status_money'] = False
         courses = Course.objects.filter(**filters)
+        request.user.last_query = f"{request.user.last_query} {request.GET.get('q')}"
         return render(request, 'base.html', {'courses': courses})
 
 class AddCourseView(View):
